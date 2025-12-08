@@ -1,7 +1,9 @@
+import { CustomerPermission, userType } from "../types/user";
+
 /* abstract class User for all user types 
     can not be instantiated directly
 */
-abstract class User {
+export abstract class User {
     protected readonly userId: number;
     protected _name: string;
     protected _email: string;
@@ -15,8 +17,8 @@ abstract class User {
     }
 
 
-    abstract getRole(): string;
-    abstract getPermissions(): string[];
+    abstract getRole(): userType;
+    abstract getPermissions(): CustomerPermission[];
 
 
     // concrete methods - shared by all subclasses
