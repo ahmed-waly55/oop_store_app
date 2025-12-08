@@ -14,6 +14,16 @@ abstract class User {
         this.userId = User.nextUserId++;
     }
 
+
+    abstract getRole(): string;
+    abstract getPermissions(): string[];
+
+
+    // concrete methods - shared by all subclasses
+    public getInfo(): string {
+        return `User ID: ${this.userId}, Name: ${this._name}, Email: ${this._email}, Role: ${this.getRole()}`;
+    }
+
     set name(name: string) {
         if (!name || name.trim().length === 0) {
             throw new Error("User name cannot be empty");
@@ -25,12 +35,17 @@ abstract class User {
             this._name = name.trim();
         }
     }
-    set email(email: string) {
-        if (!email.includes("@")) {
+    private isValidEmail(email: string): boolean {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    set email(newEmail: string) {
+        if (!newEmail || !this.isValidEmail(newEmail)) {
             throw new Error("Invalid email address");
         }
         else {
-            this._email = email;
+            this._email = newEmail.toLowerCase();
         }
     }
 
