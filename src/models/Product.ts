@@ -64,5 +64,12 @@ export class Product {
 
 
 
-
+    reduceStock(quantity: number): boolean {
+        if (quantity >= this._stock) {
+            this._stock -= quantity;
+            return true;
+        } else {
+            return false;
+        }
+    }
 }   

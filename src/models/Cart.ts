@@ -32,10 +32,10 @@ export class Cart {
         return false;
     }
     getItems(): CartItem[] {
-        return this.items;
+        return [...this.items]
     }
     getTotalPrice(): number {
-        return 0;
+        return this.items.reduce((total, item) => total + item.getTotalPrice(), 0);
     }
     isEmpty(): boolean {
         return this.items.length === 0;
@@ -44,11 +44,25 @@ export class Cart {
         this.items = [];
     }
     getItemCount(): number {
-        return 1; // Placeholder implementation
+        return this.items.reduce((count, item) => count + item.quantity, 0);
     }
     reduceStockOnCheckout(): boolean {
-        return false; // Placeholder implementation
+        for (const item of this.items) {
+            if (item.quantity > item.product.stock) {
+                return false;
+            }
+
+        }
+        // if all items are available, reduce stock
+        for (const item of this.items) {
+            if (!item.product.reduceStock(item.quantity)) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
 
 
 }
