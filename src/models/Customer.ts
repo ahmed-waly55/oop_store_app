@@ -5,7 +5,7 @@ import { Order } from "./Order";
 import { Product } from "./Product";
 import { User } from "./User";
 
-class Customer extends User {
+export class Customer extends User {
     private readonly cart: Cart;
     private readonly orders: Order[] = [];
 
@@ -62,4 +62,8 @@ class Customer extends User {
     clearCart(): void {
         this.cart.clear()
     }
+
+
+
+
 }
